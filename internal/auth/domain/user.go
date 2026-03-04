@@ -27,7 +27,7 @@ type Credential struct {
 	UserID         uuid.UUID
 	PasswordHash   string
 	LastChangedAt  time.Time
-	FailedAttempts *int
+	FailedAttempts int
 	LockedUntil    *time.Time
 }
 

@@ -36,6 +36,8 @@ func main() {
 
 	r.HandleFunc("/register", authHandler.Register).Methods("POST")
 
+	r.HandleFunc("/login", authHandler.Login).Methods("POST")
+
 	log.Println("server is started")
 
 	err := http.ListenAndServe(":8080", r)

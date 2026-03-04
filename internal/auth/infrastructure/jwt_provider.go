@@ -7,6 +7,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type JWTProvider struct {
@@ -143,4 +144,11 @@ func (j *JWTProvider) ValidateRefreshToken(
 	return &domain.TokenClaims{
 		UserID: userID,
 	}, nil
+}
+
+func ComparePassword(hashedPassword string, plainPassword string) error {
+	return bcrypt.CompareHashAndPassword(
+		[]byte(hashedPassword),
+		[]byte(plainPassword),
+	)
 }

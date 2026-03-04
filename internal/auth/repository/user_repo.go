@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"rate-limiter/internal/auth/domain"
 
 	"github.com/google/uuid"
@@ -37,7 +38,13 @@ func (u *Users) CreateUserPlan(userPlan domain.UserPlan) error {
 }
 
 func (u *Users) FindByEmail(email string) (domain.User, error) {
-	panic("unimplemneted")
+	for _, user := range u.users {
+		if user.Email == email {
+			return user, nil
+		}
+	}
+
+	return domain.User{}, fmt.Errorf("not able to find user")
 }
 
 func (u *Users) UserExists(email string) (bool, error) {

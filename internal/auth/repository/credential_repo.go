@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"rate-limiter/internal/auth/domain"
 
 	"github.com/google/uuid"
@@ -28,9 +29,22 @@ func (c *Credentials) Create(cred domain.Credential) error {
 }
 
 func (c *Credentials) FindByUserID(id uuid.UUID) (domain.Credential, error) {
-	panic("unimplemneted")
+	for _, cred := range c.credentials {
+		if cred.UserID == id {
+			return cred, nil
+		}
+	}
+
+	return domain.Credential{}, fmt.Errorf("not able to find credenetials")
 }
 
 func (c *Credentials) Update(cred domain.Credential) error {
-	panic("unimplemneted")
+	for id, credenetial := range c.credentials {
+		if credenetial.UserID == cred.UserID {
+			c.credentials[id] = cred
+			return nil
+		}
+	}
+
+	return fmt.Errorf("credentials not found")
 }
